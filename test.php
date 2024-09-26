@@ -1,22 +1,51 @@
 <?php
 
-require 'repository\UsuarioRepository.php';
-require 'repository\VeiculoRepository.php';
+require 'repository\UserRepository.php';
+require 'repository\VehicleRepository.php';
 
-$repo = new UsuarioRepository();
 
-$res = $repo->findAll();
+testFindAll();
+testFindById();
 
-foreach($res as $r) {
-    echo json_encode($r);
+
+
+function testFindAll() {
+    echo("Teste findAll <br>");
+    $repo = new UserRepository();
+    $res = $repo->findAll();
+
+    echo("Users: <br>");
+    foreach($res as $r) {
+        echo(json_encode($r).'<br>');
+    }
+
+    $repo2 = new VehicleRepository();
+    $res2 = $repo2->findAll();
+
+    echo("Vehicles: <br>");
+    foreach($res2 as $r2) {
+        echo(json_encode($r2).'<br>');
+    }
+
+    echo("<br>");
+    echo("<br>");
 }
 
-$repo2 = new VeiculoRepository();
+function testFindById() {
+    echo("Teste findById <br>");
+    $repo = new UserRepository();
+    $res = $repo->findById(1);
 
-$res2 = $repo2->findAll();
+    echo("Users: <br>");
+    echo(json_encode($res).'<br>');
 
-foreach($res2 as $r2) {
-    echo json_encode($r2);
+    $repo2 = new VehicleRepository();
+    $res2 = $repo2->findById(1);
+
+    echo("Vehicles: <br>");
+    echo(json_encode($res2).'<br>');
+
+    echo("<br>");
+    echo("<br>");
 }
-
 ?>

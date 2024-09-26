@@ -2,7 +2,7 @@
 
 require_once 'Config.php';
 
-class Conexao {
+class ConnectionDB {
 
     private static $instance;
 
