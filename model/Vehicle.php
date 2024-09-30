@@ -7,8 +7,7 @@ class Vehicle {
     private $registrationPlate;
     private $value;
 
-    public function __construct($id, $brand, $description, $color, $registrationPlate, $value) {
-        $this->id = $id;
+    public function __construct($brand, $description, $color, $registrationPlate, $value) {
         $this->brand = $brand;
         $this->description = $description;
         $this->color = $color;
