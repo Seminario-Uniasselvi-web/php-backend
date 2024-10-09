@@ -35,10 +35,12 @@ function handleGet() {
 }
 
 function handlePost() {
+    checkAuthentication();
     $repository = new VehicleRepository();
     $json = file_get_contents('php://input');
     try {
         $vehicle = VehicleMapper::fromJson($json);
+        checkFields($vehicle);
         $insertedVehicle = $repository->insert($vehicle);
         echo(json_encode(VehicleMapper::toStdClass($insertedVehicle)));
     } catch (Exception $e) {
@@ -48,10 +50,12 @@ function handlePost() {
 }
 
 function handlePut() {
+    checkAuthentication();
     $repository = new VehicleRepository();
     $json = file_get_contents('php://input');
     try {
         $vehicle = VehicleMapper::fromJson($json);
+        checkFields($vehicle);
         $updatedVehicle = $repository->update($vehicle);
         echo(json_encode(VehicleMapper::toStdClass($updatedVehicle)));
     } catch (Exception $e) {
@@ -61,6 +65,7 @@ function handlePut() {
 }
 
 function handleDelete() {
+    checkAuthentication();
     $repository = new VehicleRepository();
     if (isset($_GET['id'])) {
         $id = (int)$_GET['id'];
@@ -68,5 +73,23 @@ function handleDelete() {
     } else {
         http_response_code(400);
         echo(json_encode(['error' => 'ID do veículo não especificado.']));
+    }
+}
+
+function checkAuthentication() {
+    session_start();
+    if(!isset($_SESSION['isLogged']) || !$_SESSION['isLogged']) {
+        http_response_code(403);
+        echo(json_encode(['error' => 'Você não tem permissão para acessar este recurso.']));
+        exit;
+    }
+}
+
+function checkFields(Vehicle $vehicle) {
+    $missingFields = $vehicle->checkFields();
+    if (!empty($missingFields)) {
+        http_response_code(400);
+        echo(json_encode(['error' => 'Campo ' . $missingFields . ' não informado.']));
+        exit;
     }
 }

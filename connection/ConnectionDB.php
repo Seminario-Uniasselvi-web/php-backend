@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Config.php';
+require_once dirname(__DIR__).'\connection\Config.php';
 
 class ConnectionDB {
 

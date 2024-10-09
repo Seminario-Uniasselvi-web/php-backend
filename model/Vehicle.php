@@ -62,4 +62,13 @@ class Vehicle {
     function setValue($value) {
         $this->value = $value;
     }
+
+    function checkFields() {
+        foreach ($this as $key => $value) {
+            if ($key !== 'id' && empty($value)) {
+                return $key;
+            }
+        }
+        return '';
+    }
 }
