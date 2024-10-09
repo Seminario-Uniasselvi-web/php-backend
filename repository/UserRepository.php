@@ -1,7 +1,7 @@
 <?php
 
-require_once 'connection\ConnectionDB.php';
-require_once 'model\User.php';
+require_once dirname(__DIR__).'\connection\ConnectionDB.php';
+require_once dirname(__DIR__).'\model\User.php';
 
 class UserRepository {
 
@@ -20,6 +20,12 @@ class UserRepository {
         $query = $this->conn->prepare("select * FROM usuario WHERE id = :id");
         $query->execute([':id' => $id]);
         return $query->fetch();
+    }
+
+    public function findByUsername($userName) {
+        $query = $this->conn->prepare("select senha FROM usuario WHERE nome_usuario = lower(:userName)");
+        $query->execute([':userName' => $userName]);
+        return $query->fetch()->senha;
     }
 }
     
