@@ -12,25 +12,29 @@ class VehicleRepository {
     }
 
     public function findAll() {
-        $query = $this->conn->query("select * FROM veiculo");
+        $query = $this->conn->query("select * FROM vehicle");
         return $query->fetchAll();
     }
 
     public function findById(int $id) {
-        $query = $this->conn->prepare("select * FROM veiculo WHERE id = :id");
+        $query = $this->conn->prepare("select * FROM vehicle WHERE id = :id");
         $query->execute([':id' => $id]);
-        return $query->fetch();
+        $result = $query->fetch();
+        return $result ? $result : throw new InvalidArgumentException("Nenhum registro encontrado com o ID informado");
     }
 
     public function insert(Vehicle $vehicle): Vehicle {
-        $query = $this->conn->prepare("INSERT INTO veiculo (marca, descricao, cor, placa, valor) VALUES (:marca, :descricao, :cor, :placa, :valor)");
+        $query = $this->conn->prepare("INSERT INTO vehicle (brand, description, color, registration_plate, value, kilometers, image_url) 
+            VALUES (:brand, :description, :color, :registration_plate, :value, :kilometers, :image_url)");
         
         $queyParams = array(
-            ':marca' => $vehicle->getBrand(), 
-            ':descricao' => $vehicle->getDescription(), 
-            ':cor' => $vehicle->getColor(), 
-            ':placa' => $vehicle->getRegistrationPlate(), 
-            ':valor' => $vehicle->getValue()
+            ':brand' => $vehicle->getBrand(), 
+            ':description' => $vehicle->getDescription(), 
+            ':color' => $vehicle->getColor(), 
+            ':registration_plate' => $vehicle->getRegistrationPlate(), 
+            ':value' => $vehicle->getValue(),
+            ':kilometers' => $vehicle->getKilometers(),
+            ':image_url' => $vehicle->getImageUrl()
         );
 
         $query->execute($queyParams);
@@ -44,14 +48,28 @@ class VehicleRepository {
             throw new InvalidArgumentException("ID do veículo deve ser definido para a atualização.");
         }
 
-        $query = $this->conn->prepare("UPDATE veiculo SET marca = :marca, descricao = :descricao, cor = :cor, placa = :placa, valor = :valor WHERE id = :id");
+        $this->findById($vehicle->getId());
+
+        $query = $this->conn->prepare("
+            UPDATE vehicle 
+            SET 
+                brand = :brand, 
+                description = :description, 
+                color = :color, 
+                registration_plate = :registration_plate, 
+                value = :value ,
+                kilometers = :kilometers,
+                image_url = :image_url 
+            WHERE id = :id");
         
         $queyParams = array(
-            ':marca' => $vehicle->getBrand(), 
-            ':descricao' => $vehicle->getDescription(), 
-            ':cor' => $vehicle->getColor(), 
-            ':placa' => $vehicle->getRegistrationPlate(), 
-            ':valor' => $vehicle->getValue(),
+            ':brand' => $vehicle->getBrand(), 
+            ':description' => $vehicle->getDescription(), 
+            ':color' => $vehicle->getColor(), 
+            ':registration_plate' => $vehicle->getRegistrationPlate(), 
+            ':value' => $vehicle->getValue(),
+            ':kilometers' => $vehicle->getKilometers(),
+            ':image_url' => $vehicle->getImageUrl(),
             ':id' => $vehicle->getValue()
         );
 
@@ -64,7 +82,7 @@ class VehicleRepository {
             throw new InvalidArgumentException("ID do veículo deve ser definido para a exclusão.");
         }
 
-        $stmt = $this->conn->prepare("DELETE FROM veiculo WHERE id = :id");
+        $stmt = $this->conn->prepare("DELETE FROM vehicle WHERE id = :id");
         $stmt->execute([':id' => $id]);
     }
 }

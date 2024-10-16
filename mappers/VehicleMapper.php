@@ -11,7 +11,9 @@ class VehicleMapper {
             $data['description'] ?? '',
             $data['color'] ?? '',
             $data['registrationPlate'] ?? '',
-            $data['value'] ?? 0.0
+            $data['value'] ?? 0.0,
+            $data['kilometers'] ?? 0,
+            $data['imageUrl'] ?? ''
         );
     }
 
@@ -23,6 +25,8 @@ class VehicleMapper {
         $stdClassObject->color = $vehicle->getColor();
         $stdClassObject->registrationPlate = $vehicle->getRegistrationPlate();
         $stdClassObject->value = $vehicle->getValue();
+        $stdClassObject->kilometers = $vehicle->getKilometers();
+        $stdClassObject->imageUrl = $vehicle->getImageUrl();
 
         return $stdClassObject;
     }

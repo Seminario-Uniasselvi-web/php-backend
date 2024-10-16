@@ -2,6 +2,9 @@
 
 require_once dirname(__DIR__).'\repository\VehicleRepository.php';
 require_once dirname(__DIR__).'\mappers\VehicleMapper.php';
+require_once dirname(__DIR__).'\auth\Auth.php';
+
+header('Content-Type: application/json');
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 switch ($requestMethod) {
@@ -27,7 +30,12 @@ function handleGet() {
     $repository = new VehicleRepository();
     if (isset($_GET['id'])) {
         $id = (int)$_GET['id'];
-        echo(json_encode($repository->findById($id)));
+        try {
+            echo(json_encode($repository->findById($id)));
+        } catch(Exception $e) {
+            http_response_code(500);
+            echo(json_encode(['error' => $e->getMessage()]));
+        }
     } else {
         $vehicles = $repository->findAll();
         echo(json_encode($vehicles));
@@ -53,14 +61,22 @@ function handlePut() {
     checkAuthentication();
     $repository = new VehicleRepository();
     $json = file_get_contents('php://input');
-    try {
-        $vehicle = VehicleMapper::fromJson($json);
-        checkFields($vehicle);
-        $updatedVehicle = $repository->update($vehicle);
-        echo(json_encode(VehicleMapper::toStdClass($updatedVehicle)));
-    } catch (Exception $e) {
+
+    if (isset($_GET['id'])) {
+        $id = (int)$_GET['id'];
+        try {
+            $vehicle = VehicleMapper::fromJson($json);
+            $vehicle->setId($id);
+            checkFields($vehicle);
+            $updatedVehicle = $repository->update($vehicle);
+            echo(json_encode(VehicleMapper::toStdClass($updatedVehicle)));
+        } catch (Exception $e) {
+            http_response_code(400);
+            echo(json_encode(['error' => $e->getMessage()]));
+        }
+    } else {
         http_response_code(400);
-        echo(json_encode(['error' => $e->getMessage()]));
+        echo(json_encode(['error' => 'ID do veículo não especificado.']));
     }
 }
 
@@ -77,10 +93,8 @@ function handleDelete() {
 }
 
 function checkAuthentication() {
-    session_start();
-    if(!isset($_SESSION['isLogged']) || !$_SESSION['isLogged']) {
-        http_response_code(403);
-        echo(json_encode(['error' => 'Você não tem permissão para acessar este recurso.']));
+    $headers = getallheaders();
+    if (!verifyToken($headers)) {
         exit;
     }
 }

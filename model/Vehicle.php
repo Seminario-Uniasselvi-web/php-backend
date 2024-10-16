@@ -6,13 +6,17 @@ class Vehicle {
     private $color;
     private $registrationPlate;
     private $value;
+    private $kilometers;
+    private $imageUrl;
 
-    public function __construct($brand, $description, $color, $registrationPlate, $value) {
+    public function __construct($brand, $description, $color, $registrationPlate, $value, $kilometers, $imageUrl) {
         $this->brand = $brand;
         $this->description = $description;
         $this->color = $color;
         $this->registrationPlate = $registrationPlate;
         $this->value = $value;
+        $this->kilometers = $kilometers;
+        $this->imageUrl = $imageUrl;
     }
 
     function getId() {
@@ -38,6 +42,14 @@ class Vehicle {
     function getValue() {
         return $this->value;
     }
+
+    function getKilometers() {
+        return $this->kilometers;
+    }
+
+    function getImageUrl() {
+        return $this->imageUrl;
+    }
     
     function setId($id) {
         $this->id = $id;
@@ -61,6 +73,14 @@ class Vehicle {
 
     function setValue($value) {
         $this->value = $value;
+    }
+
+    function setKilometers($kilometers) {
+        $this->kilometers = $kilometers;
+    }
+
+    function setImageUrl($imageUrl) {
+        $this->imageUrl = $imageUrl;
     }
 
     function checkFields() {

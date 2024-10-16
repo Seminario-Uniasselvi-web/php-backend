@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 25/09/2024 às 02:04
+-- Tempo de geração: 16/10/2024 às 03:30
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -24,76 +24,78 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `usuario`
+-- Estrutura para tabela `users`
 --
 
-CREATE TABLE `usuario` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `nome_usuario` varchar(20) NOT NULL,
-  `senha` varchar(255) NOT NULL
+  `user_name` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `usuario`
+-- Despejando dados para a tabela `users`
 --
 
-INSERT INTO `usuario` (`id`, `nome_usuario`, `senha`) VALUES
+INSERT INTO `users` (`id`, `user_name`, `password`) VALUES
 (1, 'admin', 'admin');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `veiculo`
+-- Estrutura para tabela `vehicle`
 --
 
-CREATE TABLE `veiculo` (
+CREATE TABLE `vehicle` (
   `id` int(11) NOT NULL,
-  `marca` varchar(50) NOT NULL,
-  `descricao` varchar(255) DEFAULT NULL,
-  `cor` varchar(10) NOT NULL,
-  `placa` varchar(7) NOT NULL,
-  `valor` double NOT NULL
+  `brand` varchar(50) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `color` varchar(10) NOT NULL,
+  `registration_plate` varchar(7) NOT NULL,
+  `value` double NOT NULL,
+  `kilometers` int(11) NOT NULL,
+  `image_url` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `veiculo`
+-- Despejando dados para a tabela `vehicle`
 --
 
-INSERT INTO `veiculo` (`id`, `marca`, `descricao`, `cor`, `placa`, `valor`) VALUES
-(1, 'teste', 'teste', 'teste', 'teste', 5000);
+INSERT INTO `vehicle` (`id`, `brand`, `description`, `color`, `registration_plate`, `value`, `kilometers`, `image_url`) VALUES
+(1, 'teste', 'teste', 'teste', 'teste', 5000, 0, '');
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices de tabela `usuario`
+-- Índices de tabela `users`
 --
-ALTER TABLE `usuario`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `veiculo`
+-- Índices de tabela `vehicle`
 --
-ALTER TABLE `veiculo`
+ALTER TABLE `vehicle`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uk_veiculo_placa` (`placa`);
+  ADD UNIQUE KEY `uk_veiculo_placa` (`registration_plate`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT de tabela `usuario`
+-- AUTO_INCREMENT de tabela `users`
 --
-ALTER TABLE `usuario`
+ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de tabela `veiculo`
+-- AUTO_INCREMENT de tabela `vehicle`
 --
-ALTER TABLE `veiculo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `vehicle`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
