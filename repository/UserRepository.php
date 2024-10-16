@@ -12,18 +12,18 @@ class UserRepository {
     }
 
     public function findAll() {
-        $query = $this->conn->query("select * FROM usuario");
+        $query = $this->conn->query("select * FROM users");
         return $query->fetchAll();
     }
 
     public function findById($id) {
-        $query = $this->conn->prepare("select * FROM usuario WHERE id = :id");
+        $query = $this->conn->prepare("select * FROM users WHERE id = :id");
         $query->execute([':id' => $id]);
         return $query->fetch();
     }
 
     public function findByUsername($userName) {
-        $query = $this->conn->prepare("select senha FROM usuario WHERE nome_usuario = lower(:userName)");
+        $query = $this->conn->prepare("select password FROM users WHERE user_name = lower(:userName)");
         $query->execute([':userName' => $userName]);
         return $query->fetch()->senha;
     }
