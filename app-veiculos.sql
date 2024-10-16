@@ -52,17 +52,17 @@ CREATE TABLE `vehicle` (
   `description` varchar(255) DEFAULT NULL,
   `color` varchar(10) NOT NULL,
   `registration_plate` varchar(7) NOT NULL,
-  `value` double NOT NULL,
-  `kilometers` int(11) NOT NULL,
-  `image_url` varchar(255) NOT NULL
+  `image_url` varchar(250) NOT NULL,
+  `kilometers` double NOT NULL,
+  `value` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `vehicle`
 --
 
-INSERT INTO `vehicle` (`id`, `brand`, `description`, `color`, `registration_plate`, `value`, `kilometers`, `image_url`) VALUES
-(1, 'teste', 'teste', 'teste', 'teste', 5000, 0, '');
+INSERT INTO `veiculo` (`id`, `brand`, `description`, `color`, `registration_plate`, `image_url`, `kilometers`, `value`) VALUES
+(1, 'Fiat Mobi', 'Um compacto ágil e econômico que se destaca pela sua versatilidade e estilo moderno. Ideal para quem busca praticidade na cidade, o Mobi é perfeito para enfrentar o trânsito com facilidade e conforto.', 'Branco', 'LSN4I49', 'https://production.autoforce.com/uploads/picture/image/186360272/used_model_webp_comprar-mobi-2024_6e751a01ab.jpg.webp', 10000, 60000);
 
 --
 -- Índices para tabelas despejadas
