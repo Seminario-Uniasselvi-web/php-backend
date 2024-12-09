@@ -1,7 +1,13 @@
 <?php
 
-require_once dirname(__DIR__).'\repository\VehicleRepository.php';
-require_once dirname(__DIR__).'\mappers\VehicleMapper.php';
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+
+require_once dirname(__DIR__) . '/repository/VehicleRepository.php';
+require_once dirname(__DIR__) . '/mappers/VehicleMapper.php';
+
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 switch ($requestMethod) {

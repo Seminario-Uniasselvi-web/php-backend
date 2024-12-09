@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__DIR__).'\model\Vehicle.php';
+require_once dirname(__DIR__).'/model/Vehicle.php';
 
 class VehicleMapper {
     public static function fromJson($json) {

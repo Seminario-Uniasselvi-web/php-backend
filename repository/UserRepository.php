@@ -1,7 +1,7 @@
 <?php
 
-require_once dirname(__DIR__).'\connection\ConnectionDB.php';
-require_once dirname(__DIR__).'\model\User.php';
+require_once dirname(__DIR__).'/connection/ConnectionDB.php';
+require_once dirname(__DIR__).'/model/User.php';
 
 class UserRepository {
 

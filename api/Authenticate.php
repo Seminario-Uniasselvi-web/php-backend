@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__DIR__).'\repository\UserRepository.php';
+require_once dirname(__DIR__).'/repository/UserRepository.php';
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
